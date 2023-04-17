@@ -1,24 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import { Route, Switch } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import protectedRoute from './services/protectedRoute';
+import Context from './Context/Context';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Clients from './pages/Clients';
+import clients from './services/clientsData';
+import Servicos from './pages/Servicos';
 
 function App() {
+  const [allClients, setAllClients] = useState(clients);
+  const contextValue = useMemo(() => ({
+    allClients,
+    setAllClients,
+  }), [allClients, setAllClients]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Context.Provider
+      value={contextValue}
+    >
+      <Switch>
+        <Route path="/dashboard" component={protectedRoute(Dashboard)} />
+        <Route path="/clientes" component={protectedRoute(Clients)} />
+        <Route path="/servicos" component={protectedRoute(Servicos)} />
+        <Route exact path="/" component={Login} />
+      </Switch>
+    </Context.Provider>
   );
 }
 

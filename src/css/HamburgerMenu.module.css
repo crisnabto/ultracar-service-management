@@ -1,0 +1,23 @@
+.showMenu {
+    position: absolute !important;
+    background-color: rgb(112, 186, 232);
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    top: 77px;
+    left: 0;
+    height: 100px;
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.showMenu a {
+    align-self: center;
+    margin: 5px;
+}
+
+@media screen and (min-width: 769px) {
+    .showMenu {
+        display: none;
+    }
+}
