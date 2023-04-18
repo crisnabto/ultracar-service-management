@@ -1,19 +1,26 @@
+/* eslint-disable no-prototype-builtins */
 import React, { useState } from 'react';
 import QrScanner from 'react-qr-scanner';
 import employees from '../services/employeesData';
+import carParts from '../services/carPartData';
+import '../css/ServiceOrder.css';
 
 function ServiceOrder() {
   const [scannerOpen, setScannerOpen] = useState(false);
+  const [priceRender, setPriceRender] = useState();
   const [orderInfo, setOrderInfo] = useState({
     employee: 'Andre Soares',
     client: '',
     vehicle: '',
     model: '',
     km: '',
+    carPart: '',
+    price: 0.00,
     date: '',
     time: '',
     phone: '',
     description: '',
+    status: 'Em andamento',
   });
 
   const openScanner = () => {
@@ -34,7 +41,6 @@ function ServiceOrder() {
         model: qrcodeData[2],
         phone: qrcodeData[4],
       }));
-    // setModel(qrcodeData[2]);
   };
 
   const handleScan = (data) => {
@@ -59,20 +65,25 @@ function ServiceOrder() {
 
   const handleSubmit = () => {
     getTime();
-    console.log(orderInfo);
     const allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
     allOrders.push(orderInfo);
     localStorage.setItem('allOrders', JSON.stringify(allOrders));
-    console.log(allOrders);
+  };
+
+  const setPrice = (value) => {
+    const pricetag = carParts[0][value][orderInfo.vehicle];
+    setPriceRender(pricetag);
+    setOrderInfo({ ...orderInfo, price: pricetag });
   };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setOrderInfo({ ...orderInfo, [name]: value });
+    if (name === 'carPart') setPrice(value);
   };
 
   return (
-    <form>
+    <form className="form-container">
       <button type="button" onClick={openScanner}>Ler QR Code</button>
       {scannerOpen && (
         <QrScanner
@@ -135,6 +146,30 @@ function ServiceOrder() {
         />
       </label>
 
+      <label htmlFor="carPart">
+        <span>Peça</span>
+        <select
+          id="carPart"
+          name="carPart"
+          value={orderInfo.carPart}
+          onChange={handleInputChange}
+        >
+          <option>Selecione</option>
+          {Object.keys(carParts[0]).map((partName) => (
+            <option key={partName}>{partName}</option>
+          ))}
+        </select>
+      </label>
+
+      {priceRender && (
+        <p>
+          Valor:
+          {' '}
+          R$
+          {priceRender}
+        </p>
+      )}
+
       <label htmlFor="employee">
         <span>Funcionario</span>
         <select
@@ -172,6 +207,7 @@ function ServiceOrder() {
       <button
         type="button"
         onClick={handleSubmit}
+        id="submit"
       >
         Cadastrar nova ordem de servico
 

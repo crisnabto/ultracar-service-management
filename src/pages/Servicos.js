@@ -4,7 +4,7 @@ import ServiceOrder from '../components/ServiceOrder';
 
 function Servicos() {
   return (
-    <div>
+    <div className="general-box">
       <Header />
       <p>Nova ordem de serviço</p>
       <ServiceOrder />

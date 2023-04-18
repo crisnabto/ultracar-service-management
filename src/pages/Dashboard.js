@@ -4,9 +4,8 @@ import DashboardOverview from '../components/DashboardOverview';
 
 function Dashboard() {
   return (
-    <div>
+    <div className="general-box">
       <Header />
-      <p>Dashboard</p>
       <DashboardOverview />
     </div>
   );
