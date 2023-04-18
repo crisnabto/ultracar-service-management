@@ -34,10 +34,9 @@ function Header() {
             >
               <i className="fa fa-bars" />
             </button>
-            <a href="dashboard">Inicio</a>
-            <a href="clientes">Clientes</a>
-            <a href="servicos">Ordem de serviços</a>
-            <a href="veiculos">Veiculos</a>
+            <a href="/dashboard">Inicio</a>
+            <a href="/clientes">Clientes</a>
+            <a href="/servicos">Ordem de serviços</a>
           </nav>
 
           {isOpen && <HamburgerMenu />}

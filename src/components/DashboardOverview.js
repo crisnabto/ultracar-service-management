@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../css/Dashboard.css';
 
 function DashboardOverview() {
@@ -9,6 +10,7 @@ function DashboardOverview() {
     pending: [],
     finished: [],
   });
+  const history = useHistory();
 
   useEffect(() => {
     const getAllOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
@@ -39,7 +41,6 @@ function DashboardOverview() {
 
   return (
     <div className="dashboard">
-      {/* <h1>Dashboard</h1> */}
       {showAllOrders && (
         <div className="dashboard-container">
           <div className="first-buttons">
@@ -97,7 +98,7 @@ function DashboardOverview() {
                 <th>Status</th>
                 <th>Veiculo</th>
                 <th>Cliente</th>
-                <th>Editar</th>
+                <th>Detalhes</th>
               </tr>
             </thead>
 
@@ -110,7 +111,11 @@ function DashboardOverview() {
                   <td>{order.status}</td>
                   <td>{order.vehicle}</td>
                   <td>{order.client}</td>
-                  <td><button type="button">Editar</button></td>
+                  <td>
+                    <button type="button" onClick={() => history.push(`/orders/${index}`)}>
+                      Detalhes
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             ))}

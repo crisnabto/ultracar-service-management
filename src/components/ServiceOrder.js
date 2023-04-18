@@ -5,6 +5,8 @@ import employees from '../services/employeesData';
 import carParts from '../services/carPartData';
 import '../css/ServiceOrder.css';
 
+const { v4: uuidv4 } = require('uuid');
+
 function ServiceOrder() {
   const [scannerOpen, setScannerOpen] = useState(false);
   const [priceRender, setPriceRender] = useState();
@@ -21,6 +23,7 @@ function ServiceOrder() {
     phone: '',
     description: '',
     status: 'Em andamento',
+    id: '',
   });
 
   const openScanner = () => {
@@ -56,10 +59,12 @@ function ServiceOrder() {
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const seconds = now.getSeconds().toString().padStart(2, '0');
     const currentTime = `${hours}:${minutes}:${seconds}`;
+    const idUnico = uuidv4();
     setOrderInfo((prevState) => (
       {
         ...prevState,
         time: currentTime,
+        id: idUnico,
       }));
   };
 

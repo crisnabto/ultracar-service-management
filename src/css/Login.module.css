@@ -48,6 +48,7 @@
 
 .loginBox h1 {
     color: #3E4854;
+    margin-right: 120px;
 }
 
 .loginBox p {
@@ -77,5 +78,5 @@
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     border: 0;
-    /* margin: 8px; */
+    margin-top: 50px;
 }

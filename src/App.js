@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import Clients from './pages/Clients';
 import clients from './services/clientsData';
 import Servicos from './pages/Servicos';
+import Details from './components/Details';
 
 function App() {
   const [allClients, setAllClients] = useState(clients);
@@ -21,9 +22,10 @@ function App() {
       value={contextValue}
     >
       <Switch>
-        <Route path="/dashboard" component={protectedRoute(Dashboard)} />
-        <Route path="/clientes" component={protectedRoute(Clients)} />
-        <Route path="/servicos" component={protectedRoute(Servicos)} />
+        <Route exact path="/orders/:id" component={protectedRoute(Details)} />
+        <Route exact path="/dashboard" component={protectedRoute(Dashboard)} />
+        <Route exact path="/clientes" component={protectedRoute(Clients)} />
+        <Route exact path="/servicos" component={protectedRoute(Servicos)} />
         <Route exact path="/" component={Login} />
       </Switch>
     </Context.Provider>
